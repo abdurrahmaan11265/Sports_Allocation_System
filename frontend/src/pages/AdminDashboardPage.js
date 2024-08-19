@@ -16,6 +16,7 @@ const AdminDashboardPage = ({ userInfo }) => {
     const [status, setStatus] = useState('');
 
     const token = userInfo.token;
+    // const BASE_URL = "http://localhost:5000";
     const BASE_URL = "https://sports-allocation-system.onrender.com";
 
     useEffect(() => {
