@@ -12,7 +12,7 @@ dotenv.config();
 
 const app = express();
 
-// Connect to database
+// Connect to database  
 connectDB();
 
 // Middleware for JSON parsing
