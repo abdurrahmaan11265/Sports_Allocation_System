@@ -39,7 +39,7 @@ const AdminDashboardPage = ({ userInfo }) => {
         event.preventDefault();
         try {
             if (editItem) {
-                let response = await axios.put(`${BASE_URL}/api/items/${editItem._id}`, {
+                await axios.put(`${BASE_URL}/api/items/${editItem._id}`, {
                     // id: editItem._id,
                     name: itemName,
                     category,
@@ -290,12 +290,12 @@ const AdminDashboardPage = ({ userInfo }) => {
                                                     value={status}
                                                     onChange={(e) => setStatus(e.target.value)}
                                                 >
-                                                    {request.status != "Approved" &&
+                                                    {request.status !== "Approved" &&
                                                         <option value="Pending">Pending</option>}
                                                     <option value="Approved">Approved</option>
-                                                    {request.status != "Approved" &&
+                                                    {request.status !== "Approved" &&
                                                         <option value="Denied">Denied</option>}
-                                                    {request.status != "Pending" &&
+                                                    {request.status !== "Pending" &&
                                                         <option value="Item Returned">Item Returned</option>}
                                                 </select>
                                             ) : (
@@ -304,7 +304,7 @@ const AdminDashboardPage = ({ userInfo }) => {
                                         </td>
                                         {/* <td>{request.borrowedAt}</td> */}
                                         <td>{request.returnBy}</td>
-                                        {!(request.status == "Item Returned" || request.status == "Denied") &&
+                                        {!(request.status === "Item Returned" || request.status === "Denied") &&
                                             <td>
                                                 {editRequest && editRequest._id === request._id ? (
                                                     <button className="btn btn-success btn-sm" onClick={() => handleUpdateRequest(request._id)}>Update</button>

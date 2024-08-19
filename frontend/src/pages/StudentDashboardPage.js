@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { PiStudentBold } from "react-icons/pi";
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
+// import { Navigate } from 'react-router-dom';
 
 const StudentDashboardPage = ({ userInfo }) => {
     const [selectedItem, setSelectedItem] = useState('');

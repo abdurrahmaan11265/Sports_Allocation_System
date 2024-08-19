@@ -5,7 +5,7 @@ import Layout from './components/Layout';
 import AdminDashboardPage from './pages/AdminDashboardPage';
 import StudentDashboardPage from './pages/StudentDashboardPage';
 import LoginPage from './pages/LoginPage';
-import PrivateRoute from './PrivateRoute';
+// import PrivateRoute from './PrivateRoute';
 
 
 function App() {
