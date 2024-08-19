@@ -15,6 +15,7 @@ const LoginPage = () => {
 
         try {
             // Ensure the URL is complete with protocol
+            // const response = await axios.post('http://localhost:5000/api/auth/login', {
             const response = await axios.post('https://sports-allocation-system.onrender.com/api/auth/login', {
                 username,
                 password
