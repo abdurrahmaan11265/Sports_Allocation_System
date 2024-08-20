@@ -15,7 +15,7 @@ const AdminDashboardPage = ({ userInfo }) => {
     const [editRequest, setEditRequest] = useState(null);
     const [status, setStatus] = useState('');
 
-    const token = userInfo.token;
+    const token = userInfo?.token;
     // const BASE_URL = "http://localhost:5000";
     const BASE_URL = "https://sports-allocation-system.onrender.com";
 
@@ -41,14 +41,11 @@ const AdminDashboardPage = ({ userInfo }) => {
         try {
             if (editItem) {
                 await axios.put(`${BASE_URL}/api/items/${editItem._id}`, {
-                    // id: editItem._id,
                     name: itemName,
                     category,
                     quantity,
                     condition
                 }, { headers: { Authorization: `Bearer ${token}` } });
-
-
 
                 const updatedItems = items.map(item =>
                     item._id === editItem._id
@@ -94,11 +91,10 @@ const AdminDashboardPage = ({ userInfo }) => {
         try {
             await axios.delete(`${BASE_URL}/api/items/${id}`, {
                 headers: { Authorization: `Bearer ${token}` }
-                // , data: { id }
             });
             setItems(items.filter(item => item._id !== id));
         } catch (error) {
-            console.error('Error submitting request:', error);
+            console.error('Error deleting item:', error);
             if (error.response && error.response.data && error.response.data.message) {
                 alert(error.response.data.message);
             } else {
@@ -127,11 +123,10 @@ const AdminDashboardPage = ({ userInfo }) => {
             setEditRequest(null);
             setStatus('');
 
-            // asdf
             const itemsResponse = await axios.get(`${BASE_URL}/api/items`, { headers: { Authorization: `Bearer ${token}` } });
             setItems(itemsResponse.data);
         } catch (error) {
-            console.error('Error submitting request:', error);
+            console.error('Error updating request:', error);
             if (error.response && error.response.data && error.response.data.message) {
                 alert(error.response.data.message);
             } else {
@@ -275,16 +270,15 @@ const AdminDashboardPage = ({ userInfo }) => {
                                     <th>Item</th>
                                     <th>Student</th>
                                     <th>Status</th>
-                                    {/* <th>Borrowed At</th> */}
-                                    {/* <th>Return By</th> */}
+                                    <th>Return By</th>
                                     <th>Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {requests.map(request => (
                                     <tr key={request._id}>
-                                        <td>{request.item.name}</td>
-                                        <td>{request.student.username}</td>
+                                        <td>{request.item?.name || "N/A"}</td>
+                                        <td>{request.student?.username || "N/A"}</td>
                                         <td>
                                             {editRequest && editRequest._id === request._id ? (
                                                 <select
@@ -303,7 +297,6 @@ const AdminDashboardPage = ({ userInfo }) => {
                                                 request.status
                                             )}
                                         </td>
-                                        {/* <td>{request.borrowedAt}</td> */}
                                         <td>{request.returnBy}</td>
                                         {!(request.status === "Item Returned" || request.status === "Denied") &&
                                             <td>
@@ -323,7 +316,7 @@ const AdminDashboardPage = ({ userInfo }) => {
             </section>
         </>
     );
-}
+};
 
 // Example usage with hardcoded username
 const App = () => {
@@ -340,6 +333,6 @@ const App = () => {
     }
 
     return <AdminDashboardPage userInfo={userInfo} />;
-}
+};
 
 export default App;

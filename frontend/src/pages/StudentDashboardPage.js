@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { PiStudentBold } from "react-icons/pi";
 import axios from 'axios';
-// import { Navigate } from 'react-router-dom';
 
 const StudentDashboardPage = ({ userInfo }) => {
     const [selectedItem, setSelectedItem] = useState('');
     const [items, setItems] = useState([]);
     const [requests, setRequests] = useState([]);
 
-    const token = userInfo.token;
+    const token = userInfo?.token;
     // const BASE_URL = "http://localhost:5000";
     const BASE_URL = "https://sports-allocation-system.onrender.com";
 
@@ -37,7 +36,7 @@ const StudentDashboardPage = ({ userInfo }) => {
                     itemId: item._id,
                     returnBy: new Date(new Date().setDate(new Date().getDate() + 7)).toISOString().split('T')[0]
                 }, { headers: { Authorization: `Bearer ${token}` } });
-                alert("Your Request has been submitted!!");
+                alert("Your Request has been submitted!");
 
                 const updatedRequests = await axios.get(`${BASE_URL}/api/requests/`, { headers: { Authorization: `Bearer ${token}` } });
                 setRequests(updatedRequests.data);
@@ -147,22 +146,17 @@ const StudentDashboardPage = ({ userInfo }) => {
                                 <tr>
                                     <th>Item</th>
                                     <th>Status</th>
-                                    {/* <th>Borrowed At</th> */}
-                                    {/* <th>Return By</th> */}
                                 </tr>
                             </thead>
                             <tbody>
                                 {requests
-                                    .filter(request => request.student.username === userInfo.username)
+                                    .filter(request => request.student?.username === userInfo.username)
                                     .map(filteredRequest => (
                                         <tr key={filteredRequest._id}>
-                                            <td>{filteredRequest.item.name}</td>
+                                            <td>{filteredRequest.item?.name || "N/A"}</td>
                                             <td>{filteredRequest.status}</td>
-                                            {/* <td>{filteredRequest.borrowedAt.split('T')[0]}</td>
-                                            <td>{filteredRequest.returnBy.split('T')[0]}</td> */}
                                         </tr>
                                     ))}
-
                             </tbody>
                         </table>
                     </div>
@@ -170,7 +164,7 @@ const StudentDashboardPage = ({ userInfo }) => {
             </section>
         </>
     );
-}
+};
 
 // Example usage
 const App = () => {
@@ -186,6 +180,6 @@ const App = () => {
     }
 
     return <StudentDashboardPage userInfo={userInfo} />;
-}
+};
 
 export default App;
